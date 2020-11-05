@@ -8,11 +8,19 @@ root = tk.Tk()
 root.title("Dining Philosophers")
 
 def run_philosophers(appgui):
-    img = ImageTk.PhotoImage(Image.open("./img/beef.png").resize((80, 80)))
+    #img = ImageTk.PhotoImage(Image.open("./img/philosopher.png").resize((80, 80)))
+
+    philosophers = []
+
     for i in range(0,5):
-        p = ph.Philosopher(i, tk.Label(appgui, fg="white", bg="black"), tk.Label(appgui, image=img))
+        p = ph.Philosopher(i, appgui, tk.Label(appgui, fg="white", bg="black"), "./img/philosopher.png") #tk.Label(appgui, image=img))
+        #p.Tkphoto = img
+        philosophers.append(p)
+
         thread = th.Thread(target=p.run, args=(forks, room))
         thread.start()
+
+    #return philosophers
 
 if __name__ == "__main__":
     appgui = gui.AppGUI(root)
