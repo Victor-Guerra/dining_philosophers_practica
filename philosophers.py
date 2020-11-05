@@ -7,13 +7,11 @@ class Philosopher():
     __running = True
     __wsem = threading.Semaphore(1)
 
-    def __init__(self, number, canvas, label, image):
+    def __init__(self, number, label, image):
         #super().__init__(self)
         self.number = number
         self.label = label
-        self.canvas = canvas
-        #self.image = image
-        self.setImage(image)
+        self.image = image
         self.position_labels()
 
     def run(self, forks, room):
@@ -35,17 +33,18 @@ class Philosopher():
 
     def position_labels(self):
         self.label.grid(row=self.number, column=self.number)
-        self.canvas.create_image(40 * self.number, 20 * self.number, image=self.image)
-        #self.image.grid(row=self.number + 1, column=self.number)
+        #self.canvas.create_image(40 * self.number, 20 * self.number, image=self.image)
+        self.image.grid(row=self.number + 1, column=self.number)
 
 
     def setLabel(self, text):
         self.label["text"] = text
 
     def setImage(self, img):
-        self.image = ImageTk.PhotoImage(Image.open(img).resize((80, 80)))
-        self.canvas.create_image(80 * self.number, 80 * self.number, image=self.image)
-        #self.Tkphoto = image 
+        image = ImageTk.PhotoImage(Image.open(img).resize((80, 80)))
+        self.image["image"] = image
+        #self.canvas.create_image(80 * self.number, 80 * self.number, image=self.image)
+        self.Tkphoto = image 
 
     def forceDeadlock(self, forks):
         forks[self.number].acquire()
